@@ -1,0 +1,395 @@
+{% render 'style-header' %}
+
+<header class="site-header header-default" role="banner">
+    {% if section.settings.display_header_top %}
+    <div class="header-top">
+      {% if section.settings.top_message_text != blank or section.settings.countdown != blank %}
+        <div class="container">
+            <div class="top-message">
+                <p>
+                    {% render 'multilang' with section.settings.top_message_text %}
+                </p>
+                {% if section.settings.countdown != blank %}
+                <div class="wrap-countdown">
+                  <div class="header-top-countdown" data-countdown-normal data-countdown-value="{{ section.settings.countdown }}"></div>
+                </div>
+                {% endif %}
+                <a href="#" title="close" class="close" data-close-header-top>
+                    {% render 'icon-close' %}
+                </a>   
+            </div>    
+        </div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <a href="#" class="icon-nav close-menu-mb" title="Menu Mobile Icon" data-menu-mb-toogle>
+        {% render 'icon-close' %}
+    </a>
+
+    <div class="header-bottom" data-sticky-mb>
+        <div class="wrapper-header-bt">
+            <div class="container">                
+                {% render 'header-mobile' %}
+            </div>
+            
+            <div class="header-pc">
+                <div class="header-panel-top">
+                    {% if section.settings.display_custom_text != blank %}
+                    <div class="find-a-store header-left-items">
+                      <a href="{{ section.settings.link }}">
+                          {% render 'icon-location' %}
+                          <span class="text">{{ section.settings.custom_text }}</span>
+                      </a>
+                    </div>
+                    {% endif %}
+                    <div class="lang-currency-groups header-left-items">
+                        {% if settings.enable_multilang_shopify %}
+                            <div class="language-groups-mb"></div>
+                        {% endif %}
+                        {% if section.settings.display_currency != blank %}
+                            {% render 'new-currency-picker' %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="header-panel-bt">
+                    <div class="container">  
+                        <div class="left-groups header-items">
+                            <div class="lang-currency-groups {% if section.settings.display_currency != blank or settings.enable_multilang != blank %}line{% endif %} header-left-items">
+                                {% if settings.enable_multilang_shopify %}
+                                    <div class="language-groups-pc">
+                                        {% render 'new-language-picker' %}
+                                    </div>
+                                {% endif %}
+                                {% if section.settings.display_currency != blank %}
+                                    {% render 'new-currency-picker' %}
+                                {% endif %}
+                            </div>
+                            
+                            {% if section.settings.display_custom_text != blank %}
+                            <div class="find-a-store header-left-items">
+                              <a href="{{ section.settings.link }}">
+                                  {% render 'icon-location' %}
+                                  <span class="text">{{ section.settings.custom_text }}</span>
+                              </a>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="center-groups header-items">
+                            <h1 class="header-logo" itemscope itemtype="http://schema.org/Organization">
+                              <meta itemprop="url" content="{{ shop.url }}">
+                                {% if section.settings.brand_type == 'image' and section.settings.logo_pc != bank %}
+                                <a class="logo-img" href="{{ routes.cart_url | split: 'cart' | first }}" title="Logo">
+                                    <img itemprop="logo" data-src="{{ section.settings.logo_pc | img_url: 'master' }}"
+                                        src="{{ section.settings.logo_pc | img_url: 'master' }}"
+                                        alt="{{ section.settings.logo_pc.alt | default: shop.name }}" itemprop="logo" class="lazyautosizes lazyloaded" data-sizes="auto">
+
+                                </a>
+                                {% elsif section.settings.brand_text != '' %}
+                                <a class="logo-title" href="{{ routes.cart_url | split: 'cart' | first }}" style="width: {{ section.settings.logo_max_width }}px">
+                                    {{ section.settings.brand_text }}
+                                </a>
+                                {% else %}
+                                <a class="logo-title" href="{{ routes.cart_url | split: 'cart' | first }}">
+                                    {{ shop.name }}
+                                </a>
+                                {% endif %}
+                            </h1>
+                        </div>
+
+                        <div class="right-groups header-items">
+                            {% if shop.customer_accounts_enabled %}
+                              <div class="customer-links">
+                                  {% if customer %}
+                                  <a class="acc-links acc-logout" id="customer_logout_link" href="/account/logout" {% if settings.enable_multilang_shopify %}data-translate="layout.customer.log_out"{% endif %}>
+                                      <span class="text">{{ 'layout.customer.log_out' | t }}</span>
+                                  </a>
+                                  <span class="line-ac"> / </span>
+                                  <a class="acc-links acc-title" href="/account"{% if settings.enable_multilang_shopify %} data-translate="customer.account.title"{% endif %}>
+                                      <span class="text">{{ 'customer.account.title' | t }}</span>
+                                  </a>
+                                  
+                                  {% else %}  
+                                  <a data-dropdown-user class="acc-links acc-sign-in" id="customer_login_link" href="/account/login" {% if settings.enable_multilang_shopify %}data-translate="customer.login.sign_in"{% endif %}>
+                                      <span class="text">{{ 'customer.login.sign_in' | t }}</span>
+                                  </a>  
+                                  {% endif %}                                   
+                              </div>
+                            {% endif %}
+                           
+                            {% if settings.enable_wishlist %}
+                            <a class="wishlist" href="{{ pages['wish-list'].url }}" title="{{ 'wishlist.general.my_wishlist' | t }}">
+                                <svg class="icon-heart" viewBox="0 0 1024 1024">
+                                  <path class="path1" d="M486.4 972.8c-4.283 0-8.566-1.074-12.434-3.222-4.808-2.67-119.088-66.624-235.122-171.376-68.643-61.97-123.467-125.363-162.944-188.418-50.365-80.443-75.901-160.715-75.901-238.584 0-148.218 120.582-268.8 268.8-268.8 50.173 0 103.462 18.805 150.051 52.952 27.251 19.973 50.442 44.043 67.549 69.606 17.107-25.565 40.299-49.634 67.55-69.606 46.589-34.147 99.878-52.952 150.050-52.952 148.218 0 268.8 120.582 268.8 268.8 0 77.869-25.538 158.141-75.901 238.584-39.478 63.054-94.301 126.446-162.944 188.418-116.034 104.754-230.314 168.706-235.122 171.376-3.867 2.149-8.15 3.222-12.434 3.222zM268.8 153.6c-119.986 0-217.6 97.614-217.6 217.6 0 155.624 120.302 297.077 221.224 388.338 90.131 81.504 181.44 138.658 213.976 158.042 32.536-19.384 123.845-76.538 213.976-158.042 100.922-91.261 221.224-232.714 221.224-388.338 0-119.986-97.616-217.6-217.6-217.6-87.187 0-171.856 71.725-193.314 136.096-3.485 10.453-13.267 17.504-24.286 17.504s-20.802-7.051-24.286-17.504c-21.456-64.371-106.125-136.096-193.314-136.096z"></path>
+                                </svg>
+                                <span class="wishlist-text text-hover"{% if settings.enable_multilang_shopify %} data-translate="wishlist.general.my_wishlist"{% endif %}>
+                                    {{ 'wishlist.general.my_wishlist' | t }}
+                                </span>                  
+                            </a>
+                            {% endif %}
+
+                            <div class="wrapper-top-cart cart-icon">
+                                {% render 'wrapper-top-cart' %}                   
+                            </div>
+
+                            <div class="nav-search">                    
+                                {% render 'search-bar' %}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>               
+        </div>
+    </div>
+</header>
+
+<script>
+    var appendPrependMenuMobile = function() {
+
+        var headerPC = $('.wrapper-header .header-pc'),
+            wrapperHeaderBt = $('.wrapper-header-bt'),
+            wrapperNav = $('.wrapper-navigation'),
+            areaMb = wrapperNav.find('.mb-area');
+
+        if (window.innerWidth < 1200) {
+            headerPC.appendTo(areaMb);
+        } else {
+            headerPC.appendTo(wrapperHeaderBt);
+        };
+    };
+
+    $(document).ready(function() {
+        appendPrependMenuMobile();
+    });
+
+    var winWidth = $(window).innerWidth();
+
+    $(window).on('resize', function () {
+
+        var resizeTimerId;
+
+        clearTimeout(resizeTimerId);
+
+        resizeTimerId = setTimeout(function() {
+            var curWinWidth = $(window).innerWidth();
+
+            if ((curWinWidth < 1200 && winWidth >= 1200) || (curWinWidth >= 1200 && winWidth < 1200)) {
+                appendPrependMenuMobile();
+            };
+            winWidth = curWinWidth;
+        }, 0);
+    });
+
+</script>
+
+{% schema %}
+    {
+        "name": "Header",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Header Top"
+            },
+            {
+                "type": "checkbox",
+                "id": "display_header_top",
+                "label": "Display Header Top?",
+                "default": true
+            },
+            {
+                "type": "image_picker",
+                "id": "header_top_image",
+                "label": "Image"
+            },
+            {
+                "type": "textarea",
+                "id": "top_message_text",
+                "label": "Top Message Text",
+                "default": "Top Promotion Bar Description"
+            },
+            {
+                "type" : "textarea",
+                "id" : "countdown",
+                "label" : "Countdown",
+                "default" : "2021/01/7 0:0:00",
+                "info": "================="
+            },
+            {
+                "type": "color",
+                "id": "bg_header_top",
+                "label": "Background Color",
+                "default": "#232323"
+            },
+            {
+                "type": "color",
+                "id": "text_header_top_color",
+                "label": "Text Color",
+                "default": "#fff"
+            },
+            {
+                "type": "header",
+                "content": "Header Bottom"
+            },
+            {
+                "type": "color",
+                "id": "bg_header_bottom_color",
+                "label": "Background Color",
+                "default": "#f7f7f7"
+            },
+            {
+                "type": "color",
+                "id": "header_bottom_icon_color",
+                "label": "Header Bottom Icon Color",
+                "default": "#232323"
+            },
+            {
+                "type": "color",
+                "id": "header_bottom_text_color",
+                "label": "Header Bottom Text Color",
+                "default": "#3c3c3c"
+            },
+            {
+                "type": "color",
+                "id": "header_bottom_icon_vertical_color",
+                "label": "Header Bottom Icon Vertical Color",
+                "default": "#eaeaea"
+            },
+            {
+                "type": "color",
+                "id": "header_bottom_icon_dropdown_color",
+                "label": "Header Bottom Icon Dropdown Color",
+                "default": "#c0c0c0",
+                "info": "======================="
+            },
+            {
+                "type": "checkbox",
+                "id": "display_currency",
+                "label": "Display Currency?",
+                "default": true
+            },
+            {
+                "type": "checkbox",
+                "id": "display_custom_text",
+                "label": "Display Find a Store?",
+                "default": true
+            },
+            {
+                "type": "textarea",
+                "id": "custom_text",
+                "label": "Custom Text",
+                "default": "Find A Store"
+            },
+            {
+                "type": "url",
+                "id": "link",
+                "label": "Link"
+            },
+            {
+                "type": "header",
+                "content": "Logo"
+            },
+            {
+                "type": "radio",
+                "id": "brand_type",
+                "label": "Use image or text for logo?",
+                "options": [
+                    {
+                        "value": "text",
+                        "label": "Text"
+                    },
+                    {
+                        "value": "image",
+                        "label": "Image"
+                    }
+                ],
+                "default": "text"
+            },
+            {
+                "type": "textarea",
+                "id": "brand_text",
+                "label": "Logo text"
+            },
+            {
+              "type": "range",
+              "id": "logo_max_width",
+              "label": "Custom logo width",
+              "min": 30,
+              "max": 250,
+              "step": 5,
+              "unit": "px",
+              "default": 30
+            },
+            {
+              "type": "text",
+              "id": "font_size_logo",
+              "label": "Logo font size",
+              "default": "20px" 
+            },
+            {
+              "type": "color",
+              "id": "logo_text_color",
+              "label": "Logo color",
+              "default": "#0f0f0f"
+            },
+            {
+                "type": "image_picker",
+                "id": "logo",
+                "label": "Logo image for Mobile",
+                "info": "95px x 44px recommended"
+            },
+            {
+                "type": "text",
+                "id": "max_height_logo_mb",
+                "label": "Max Height of Logo Mobile",
+                "default": "26px" 
+            },
+            {
+                "type": "image_picker",
+                "id": "logo_pc",
+                "label": "Logo image for PC",
+                "info": "95px x 44px recommended"
+            },
+            {
+                "type": "text",
+                "id": "max_height_logo_pc",
+                "label": "Max Height of Logo PC",
+                "default": "37px" 
+            },    
+            {
+                "type": "header",
+                "content": "Search"
+            },
+            {
+                "type": "color",
+                "id": "bg_search_color",
+                "label": "Background Color",
+                "default": "#fff"
+            },      
+            {
+                "type": "color",
+                "id": "search_color",
+                "label": "Search Color",
+                "default": "#848484"
+            },          
+            {
+                "type": "header",
+                "content": "Cart Header"
+            },
+            {
+                "type": "color",
+                "id": "bg_cart_color",
+                "label": "Background Color Items Cart",
+                "default": "#e95144"
+            },
+            {
+                "type": "color",
+                "id": "cart_color",
+                "label": "Color Items Cart",
+                "default": "#fff",
+                "info": "======================="
+            }
+        ]
+    }
+{% endschema %}

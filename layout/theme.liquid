@@ -1,0 +1,110 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+
+  <!-- Basic page needs ================================================== -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+  <!-- Title and description ================================================== -->
+  <title>
+  {{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape | split: '[/countdown]' | last | strip_html }}">
+  {% endif %}
+
+  <!-- Product meta ================================================== -->
+  {% render 'fb-open-graph-tags' %}
+  {% render 'twitter-card' %}
+
+  <!-- Helpers ================================================== -->
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, minimal-ui">
+  
+  <!-- Favicon -->
+  {% if settings.favicon != blank %}
+  <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+  {% endif %}
+  
+  <!-- Styles -->
+  {% render 'head_styles' %}
+  
+   <!-- Scripts -->
+  {% render 'head_scripts' %}
+
+  <!-- Header hook for plugins ================================ -->
+  {{ content_for_header }}
+
+  <!--[if lt IE 9]>
+  {{ '//html5shiv.googlecode.com/svn/trunk/html5.js' | script_tag }}
+  <![endif]-->
+
+  {% comment %}
+    If you store has customers disabled, you can remove the following JS file
+  {% endcomment %}
+  
+  {% if template contains 'customers' %}
+    {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+    {{ 'customer_area.js'  | shopify_asset_url | script_tag }}
+  {% endif %}
+
+  {% render 'linked-options' %}
+</head>
+
+<body id="{{ page_title | handle }}" class="{{ header_class }} {{ layout_class }} {% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}">
+  <div class="wrapper-header">
+    {% section 'header' %}
+    {% section 'navigation' %}
+  </div>
+  {% render 'scheme' %}
+  <div class="wrapper-body wrapper-container" id="PageContainer">
+
+    <main class="main-content" id="MainContent" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% section 'home-brands' %}
+    {% section 'footer' %}
+
+    {% unless template contains 'product' %}
+      <div class="themevale_popup">
+        {% section 'someone-purchased' %}
+        {% section 'cookie_popup' %}
+      </div>
+    {% endunless %}
+
+    {% if settings.enable_back_to_top %}
+    <div id="back-top" style="display: none;">
+        <a class="nav_up" href="#top" title="Back to top">
+            <i class="fa fa-angle-up" aria-hidden="true"></i>
+        </a>
+    </div>
+    {% endif %}
+
+  </div>
+  
+  {% render 'footer_scripts' %}
+
+  {% render 'search-autocomplete' %}
+  
+  {% render 'customer_links' %}
+
+  {% render 'size-chart' %}
+
+  {% render 'message-modal' %}
+
+  {% render 'newsletter' %}
+
+  {% if template contains 'product' %}
+    {% render 'ask_an_expert' %}  
+  {% endif %}
+
+  <div class="wrapper-overlay"></div>
+</body>
+</html>

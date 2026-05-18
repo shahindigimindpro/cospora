@@ -1,0 +1,10 @@
+<ul class="dropdown-cat1" style="display: none;">
+  {% for link_child_item in linklists[link_child].links %}
+  <li {% if linklists[link_child_item.handle] != empty %}class="dropdown{% if collection.handle == link_child_item.handle %} active{% endif %}"{% endif %}>
+    <p class="link-action-wrapper">
+    <a href="{{ link_child_item.url }}"{% if collection.handle == link_child_item.handle %}class="active"{% endif %}>
+      {% render 'multilang' with link_child_item.title %}
+    </a>
+  </li>
+  {% endfor %}
+</ul>

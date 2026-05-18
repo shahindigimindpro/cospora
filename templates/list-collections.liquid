@@ -1,0 +1,12 @@
+<div class="container">
+	{% render 'breadcrumb' %}
+
+	<header class="page-header">
+        <h2 {% if settings.enable_multilang %}data-translate="collections.general.title"{%endif%}>
+        	{{ 'collections.general.title' | t }}
+        </h2> 
+    </header>
+    
+	{% section 'list-collections-template' %}
+	{% section 'home-featured-products' %}
+</div>

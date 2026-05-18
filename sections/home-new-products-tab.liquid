@@ -1,0 +1,222 @@
+{% if section.settings.show_home_new_products_tab %}
+{%- assign layout_style = carousel | default: section.settings.layout_style -%}
+
+{% case section.settings.products_tab_results_per_row %}
+{% when '5' %}
+    {%- assign class = 'five-items' -%}
+{% when '4' %}
+    {%- assign class = 'four-items' -%}
+{% when '3'%}
+    {%- assign class = 'three-items' -%}
+{% endcase%}
+
+<section class="home-new-product-tab" data-id="{{section.id}}" id="section-{{section.id}}" data-product-tabs>
+    <div class="container">
+        {% if section.settings.new_product_tab_title != blank %}
+        <div class="widget-title">
+            <h3 class="box-title">
+                <span class="title">
+                    {% render 'multilang' with section.settings.new_product_tab_title %}
+                </span>
+            </h3>
+        </div>
+        {% endif %}
+        <div class="widget-product">
+            <ul class="nav nav-tabs list-product-tabs" data-row="{{ section.settings.limit_product }}">
+                {% for block in section.blocks %}
+                {% assign collection = collections[block.settings.collection] %}
+                {% capture collection_title %}{{ collection.title | escape }}{% endcapture %}
+                <li>
+                    <a href="#tab-product-{{ block.id }}" data-target="#product-tab-{{ block.id }}" data-product-tabTop data-href="/collections/{{ block.settings.collection }}?view=json" class="tab-links {% if forloop.first %}active{% endif %}" id="tab-{{ block.id }}" data-id="{{ block.id }}" data-toggle="tab" role="tab" aria-selected="true" {% if settings.enable_multilang %}data-translate="collections.general.link_title|title:{{collection_title}}" translate-item="title" {% endif %}>
+                        {% render 'multilang' with block.settings.title %}
+                    </a>
+                    <span class="dots"></span>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content product-tabs-content">
+               {% for block in section.blocks %}
+                <div class="tab-content{% if forloop.first %} show active{% endif %} {% if layout_style == 'carousel' %} layout_carousel {% else %} layout_grid {% endif %}" data-product-TabContent id="product-tab-{{ block.id }}">
+                    <div class="products-grid row {{ class }}" data-row="{{ section.settings.products_tab_results_per_row }}" data-rowlt="5" data-rowtb="4" data-rowtblg="3" data-rowbm="2">
+                        <div class="loading col-12"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+<style>
+    .home-new-product-tab .list-product-tabs li a{
+        color: {{ section.settings.color_tab }};
+    }
+    .home-new-product-tab .list-product-tabs li a.active{
+        color: {{ section.settings.color_text_tab }};
+        border: 2px solid {{ section.settings.color_border_tab }};
+        background: {{ section.settings.color_background_tab }};
+    }
+</style>
+{% schema %}
+{
+    "name": "Home New Products Tab",
+    "class": "home-new-products-tab-sections",
+    "max_blocks" : 10,
+    "settings": [
+    {
+        "type": "checkbox",
+        "id": "show_home_new_products_tab",
+        "label": "Enable",
+        "default": true
+    },
+    {
+        "type": "range",
+        "id": "space_on",
+        "label": "Space on",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 0
+        },
+    {
+        "type": "range",
+        "id": "space_below",
+        "label": "Space below",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 60
+    },
+    {
+        "type": "text",
+        "id": "new_product_tab_title",
+        "label": "Title",
+        "default": "New Products"
+    },
+    {
+        "type": "select",
+        "id": "layout_style",
+        "label": "Layout Style:",
+
+        "options": [
+            {
+                "value": "carousel",
+                "label": "Carousel" 
+            },
+            { 
+                "value": "grid",
+                "label": "Grid" 
+            }          
+        ],
+        "default": "carousel"
+    },  
+    {
+        "type": "header",
+        "content": "Collection Tab New"
+    },
+    {
+        "type": "color",
+        "id": "color_tab",
+        "label": "Color Text",
+        "default": "#2d2d2d"
+    },
+    {
+        "type": "color",
+        "id": "color_text_tab",
+        "label": "Color Text Active",
+        "default": "#2d2d2d"
+    }, 
+    {
+        "type": "color",
+        "id": "color_border_tab",
+        "label": "Color Border Text Active",
+        "default": "#eaeaea"
+    },
+    {
+        "type": "color",
+        "id": "color_background_tab",
+        "label": "Color Background Text Active",
+        "default": "#fff"
+    },
+    {
+        "type": "range",
+        "id": "limit_product",
+        "label": "Limit Product",
+        "min": 1,
+        "max": 20,
+        "step": 1,
+        "default": 6
+    },
+    {
+        "type": "select",
+        "id": "products_tab_results_per_row",
+        "label": "Products per row",
+        "options": [
+        {
+        "value": "3",
+        "label": "3"
+        },
+        {
+        "value": "4",
+        "label": "4"
+        },
+        {
+        "value": "5",
+        "label": "5"
+        }
+        ],
+        "default": "5"
+        }
+        ],
+        "blocks" : [
+        {
+        "type" : "NewProductTabs",
+        "name" : "New Product Tabs",
+        "settings":[
+        {
+            "type" : "text",
+            "id" : "title",
+            "label" : "Title Tabs",
+            "default" : "Makeup"
+        },
+        {
+        "type" : "collection",
+        "id" : "collection",
+        "label" : "Collection to use"
+        }
+        ]
+    }
+    ],
+    "presets": [
+    {
+    "name": "Home New Products Tab",
+    "category": "Collection"
+    }
+    ]
+}
+{% endschema %}
+<style>
+#section- {
+        {
+        section.id
+    }
+}
+
+    {
+    margin-top: {
+            {
+            section.settings.space_on
+        }
+    }
+
+    px;
+
+    margin-bottom: {
+            {
+            section.settings.space_below
+        }
+    }
+
+    px;
+}
+</style>

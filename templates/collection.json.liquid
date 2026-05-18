@@ -1,0 +1,19 @@
+{% layout none %}
+{% assign limit = canonical_url | split: 'limit=%26' | last %}
+<div class="products-grid">
+    <div class="grid-item">
+        {% if collection.products_count > 0 %}  
+        {% for product in collection.products limit: limit %}
+          <div class="item grid-item col-6 col-md-4 col-lg-3 {% if settings.product_image_border %} grid-item-border{% endif %}">
+            {% render 'product-grid-item' with product as product %}
+          </div>
+        {% endfor%}
+
+        {% else %}
+
+        <div class="text-center" {% if settings.enable_multilang %}data-translate="collections.general.no_matches"{% endif %}>
+            {{ 'collections.general.no_matches' | t }}
+        </div>
+        {% endif %}
+    </div>
+</div>

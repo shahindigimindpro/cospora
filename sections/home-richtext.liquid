@@ -1,0 +1,99 @@
+<section class="homepage-custom-text" id="custom-text-{{section.id}}">
+  <div class="container">
+    <div class="custom-content">
+      {% if section.settings.title != blank %}
+      <div class="widget-title">   
+        <h3 class="box-title"> 
+            {% render 'multilang' with section.settings.title %}
+        </h3>
+      </div>
+      {% endif %}
+      <div class="custom_item" style="text-align: center;">
+        <div class="custom_item_inner">
+          {% if section.settings.text_des != blank %}
+          <div class="rte" data-section-id="{{ section.id }}">
+            {% render 'multilang' with  section.settings.text_des %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  @media (max-width: 767px) {
+    #custom-text-{{section.id}} {
+      margin-bottom: {{ section.settings.margin_bottom_mb }}px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1199px) {
+    #custom-text-{{section.id}} {
+      margin-bottom: {{ section.settings.margin_bottom_tab }}px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    #custom-text-{{section.id}} {
+      margin-bottom: {{ section.settings.margin_bottom }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label":"Heading",
+      "default":"Talk about your brand"
+    },
+    {
+        "type": "richtext",
+        "id": "text_des",
+        "label": "Text",
+        "default":"<p>Nutzen Sie diesen Text, um Infos über Ihre Marke mitzuteilen. Beschreiben Sie ein Produkt, kündigen Sie etwas an oder heißen Sie Kunden willkommen.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Margin Bottom:"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mb",
+      "label": "Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_tab",
+      "label": "Tablet",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 38
+    }
+  ],
+   "presets": [
+    {
+      "name": "Rich text",
+      "category":"Text"
+    }
+  ]
+
+}
+{% endschema %}

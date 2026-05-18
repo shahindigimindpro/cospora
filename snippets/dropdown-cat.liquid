@@ -1,0 +1,19 @@
+<ul class="dropdown-cat">
+  {% for link_child_item in linklists[link_child].links %}
+  <li {% if linklists[link_child_item.handle] != empty %}class="dropdown{% if collection.handle == link_child_item.handle %} active{% endif %}"{% endif %}>
+    <p class="link-action-wrapper">
+    <a href="{{ link_child_item.url }}"{% if collection.handle == link_child_item.handle %}class="active"{% endif %}>
+      {% render 'multilang' with link_child_item.title %}
+    </a>
+    
+    {% if linklists[link_child_item.handle] != empty %}
+    <span class="icon-dropdown">
+      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-chevron-right" viewBox="0 0 478.448 478.448"><g><g><polygon points="131.659,0 100.494,32.035 313.804,239.232 100.494,446.373 131.65,478.448 377.954,239.232"></polygon></g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+    </span>
+    </p>
+    {% assign link_child = link_child_item.handle %}
+    {% render 'dropdown-cat1' with link_child as link_child %}
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>

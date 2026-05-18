@@ -1,0 +1,151 @@
+{%if section.settings.enable %}
+<div class="home-video Video-{{section.id}}">
+  <div class="container">
+    {% if section.settings.title != blank %}
+      <div class="widget-title">   
+        <h3 class="box-title"> 
+            {% render 'multilang' with section.settings.title %}
+        </h3>
+      </div>
+      {% endif %}
+    <div class="video-wrapper">
+    {% if section.settings.video_format == 'youtube' %}
+    <div class="video-youtobe">
+      <iframe width="100%" data-video-id="{{section.settings.video_id }}"  class="lazyload" height="{{section.settings.height_video}}" data-src="https://www.youtube.com/embed/{{section.settings.video_id}}?autoplay=0&mute=1" frameborder="0" allowfullscreen="" volume="0"></iframe>
+    </div>
+    {% else %}
+    <div class="video-mp4">
+      <video width="100%" autoplay muted loop src="{{ section.settings.videolink }}"></video>
+    </div>
+    {% endif %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<style>
+  .Video-{{section.id}} .widget-title .box-title{
+    color:{{section.settings.title_color}};
+  }
+   @media (max-width: 767px) {
+    .Video-{{section.id}} {
+      margin-bottom: {{ section.settings.margin_bottom_mb }}px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1199px) {
+    .Video-{{section.id}} {
+      margin-bottom: {{ section.settings.margin_bottom_tab }}px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .Video-{{section.id}} {
+      margin-bottom: {{ section.settings.margin_bottom }}px;
+    }
+  }
+</style>
+{% schema %}
+  {
+    "name": "Video",
+    "settings": [
+        {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable ?",
+            "default":true
+        },
+       {
+      "type": "text",
+      "id": "title",
+      "label":"Title"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label":"Title Color",
+      "default":"#2d2d2d"
+    },
+        {
+            "type": "select",
+            "id": "video_format",
+            "label": "Video Format",
+            "options": [
+                {
+                    "value": "youtube",
+                    "label": "Youtube"
+                },
+                {
+                    "value": "mp4",
+                    "label": "MP4"
+                }
+            ],
+            "default": "youtube"
+        },
+        {
+          "type":"header",
+          "content":"Video Youtobe"
+        },
+        {
+          "type": "text",
+          "id": "video_id",
+          "label": "YouTube video ID",
+          "default": "_9VUPq3SxOc",
+          "info": "[Find your YouTube video ID](https://docs.joeworkman.net/rapidweaver/stacks/youtube/video-id)"
+        },
+        {
+            "type":"text",
+            "id":"height_video",
+            "label":"Video Height",
+            "default":"650",
+            "info":"Default 650"
+        },
+        {
+          "type":"header",
+          "content":"Video MP4"
+        },
+        {
+            "type":"text",
+            "id":"videolink",
+            "label":"Video Link"
+        },
+       {
+      "type": "header",
+      "content": "Margin Bottom:"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mb",
+      "label": "Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_tab",
+      "label": "Tablet",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 38
+    }
+    ],
+    "presets":[
+      {
+        "name": "Video",
+        "category": "Video"
+      }
+    ]
+  }
+{% endschema %}

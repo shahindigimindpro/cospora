@@ -1,0 +1,157 @@
+{% if section.blocks.size > 0 %}
+<div class="home-testimonials-block" id="home-testimonials-{{section.id}}" >
+  <div class="container">
+
+  {% if section.settings.title != blank %}
+    <div class="widget-title">   
+      <h3 class="box-title">
+        <span class="title"> 
+          {% render 'multilang' with section.settings.title %}
+        </span>
+      </h3>
+    </div>
+    {% endif %}
+
+    <div class="row testimonials-{{ section.blocks.size }}-blocks" data-trending-slider>
+        {% for block in section.blocks %}
+        {% case section.blocks.size %}
+          {% when 1 %}
+            {%- assign column_size = 'col-12' -%}
+          {% when 2 %}
+            {%- assign column_size = 'col-12 col-md-6' -%}
+          {% when 3 %}
+              {%- assign column_size = 'col-12 col-md-6 col-lg-4' -%}        
+        {% endcase %}
+        
+        <div class="{{ column_size }}">
+          <div class="quotes-slide--{{ block.id }}" {{ block.shopify_attributes }}>
+            <blockquote class="quotes-slider__text text-center">
+              <span class="quote-icon">{% render 'icon-quote' %}</span>
+              {% if block.settings.quote != blank %}
+                <div class="rte-setting rte">{{ block.settings.quote }}</div>
+              {% endif %}
+              {% if block.settings.author != blank %}
+                <cite>{{ block.settings.author | escape }}</cite>
+              {% endif %}
+            </blockquote>
+          </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+  </div>
+</div>
+{% endif %}
+<style>
+  .home-testimonials-block blockquote{
+      background-color: #fff;
+  }
+  .home-testimonials-block .quotes-slider__text p {
+    margin-bottom: 30px;
+  }
+  .home-testimonials-block .quotes-slider__text cite{
+      font-style: normal;
+  }
+  .home-testimonials-block .quotes-slider__text cite:before{
+    content: '\2014 \0020';
+  }
+  @media (max-width: 767px) {
+    #home-testimonials-{{section.id}} {
+      margin-bottom: {{ section.settings.margin_bottom_mb }}px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    #home-testimonials-{{section.id}} {
+      margin-bottom: {{ section.settings.margin_bottom_tab }}px;
+    }
+  }
+  @media (min-width: 1200px) {
+    #home-testimonials-{{section.id}} {
+      margin-bottom: {{ section.settings.margin_bottom }}px;
+    }
+  }
+</style>
+{% schema %}
+{
+  "name": "Testimonials",
+  "class": "home-testimonials-section",
+  "max_blocks": 9,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Testimonials"
+    },
+    {
+      "type": "header",
+      "content": "Margin Bottom:"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mb",
+      "label": "Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 45
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_tab",
+      "label": "Tablet",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Text",
+          "default": "<p>Kunden-Reviews und Testimonials, die Kundenzufriedenheit beweisen.</p>"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Autor",
+          "default": "Name des Autors"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        },
+        {
+          "type": "quote"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

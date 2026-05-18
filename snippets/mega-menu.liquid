@@ -1,0 +1,286 @@
+{% if block_style == "style_1" %}
+<div class="container">
+  <div class="row">
+      <div class="col-12 {% if dpl_column_first_style and dpl_column_second_style and featured_product != blank and banner_first_style != blank %}column-left col-md-12 col-lg-7 {% elsif dpl_column_first_style == false and dpl_column_second_style == false  %}col-md-12 full-width {% elsif featured_product == blank and banner_first_style == blank %}col-md-12 full-width{% else %}col-md-12 col-lg-9{% endif %}">
+        <div class="row hl-shuffle-container" style="-webkit-column-count: {{per_row_1}};column-count: {{per_row_1}}">    
+          {% for l in linklists[link_child].links %}
+          <div class="inner col-12 {% if dpl_column_first_style == false and dpl_column_second_style == false  %}col-md-12 col-lg-3 {% else %}col-md-12 col-lg-4{% endif %}">
+            <div class="inner-wrap menu-lv-2 dropdown">
+              <a href="{{ l.url }}" class="current second-menu {% unless linklists[l.handle] != empty %}full-text{% endunless %}">
+                {% render 'multilang' with l.title %}
+
+                {% if linklists[l.handle] != empty %}
+                <span class="icon-dropdown" data-toggle-menu-mb>
+                  <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </span>
+                {% endif %}
+              </a>
+
+              {% if linklists[l.handle] != empty %}
+              <div class="dropdown dropdow-lv2 sub-menu-mobile menu-mb-translate">
+                <div class="menu-mb-title">
+                  <span class="icon-dropdown no-event" data-toggle-menu-mb>
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                  </span>
+                  {% render 'multilang' with l.title %}
+                </div>
+
+                <ul class="site-nav-dropdown">
+                  {% for child_l in linklists[l.handle].links %}
+                    <li class="menu-lv-3">
+                      <a class="third-menu {% if child_l.active %}current{% endif %}" href="{{ child_l.url }}">
+                        {% render 'multilang' with child_l.title %}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endif %}
+
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if featured_product != blank or banner_first_style != blank %}
+      <div class="col-12 {% if dpl_column_first_style and dpl_column_second_style and banner_first_style != blank and featured_product != blank %}column-right col-md-12 col-lg-5 {% elsif dpl_column_first_style == false %}no-product col-md-12 col-lg-3{% else %}col-md-12 col-lg-3 no-banner{% endif %}">
+        {% if dpl_column_first_style %}
+        {% if featured_product != blank %}
+        <div class="featured-product">
+          {% if title_featured_product != blank %}
+          <h3>
+            {% render 'multilang' with title_featured_product %}
+          </h3>
+          {% endif %}
+
+          <div class="featuredProductCarousel product-grid one-items" data-row="1" data-rowtb="1" data-rowtblg="1" data-rowbm="1">
+            {% for product in collections[featured_product].products limit:featured_product_limit_all %}
+              {% render 'mega-menu-product-grid' with product as product %}
+            {% endfor %}
+          </div>
+
+        </div>
+        {% endif %}
+        {% endif %}
+
+        {% if dpl_column_second_style %}
+          <div class="banner">
+            {% if banner_first_style != blank %}
+              <a href="{{ link_banner_first_style }}" title="" class="animate-scale">    
+                <img class="lazyload" data-srcset="{{ banner_first_style | img_url : '224x' }}" alt="" >
+              </a>
+            {% endif %}
+            {% if banner_second_style != blank %}
+              <a href="{{ link_banner_second_style }}" title="" class="img-second animate-scale">  
+                <img class="lazyload" data-srcset="{{ banner_second_style | img_url : '224x' }}" alt="" >
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+      {% endif %}
+  </div>
+</div>
+{% endif %}
+
+
+{% if block_style == "style_2" %}
+<div class="container">
+  <div class="row">
+
+    <div class="col-12 column-right col-md-12 col-lg-12">
+      <div class="row hl-shuffle-container" style="-webkit-column-count: {{per_row_2}};column-count: {{per_row_2}}">
+        {% for l in linklists[link_child].links %}
+        <div class="inner col-12 col-md-12 col-lg-4">
+          <div class="inner-wrap menu-lv-2 dropdown">
+            <a href="{{ l.url }}" class="current second-menu {% unless linklists[l.handle] != empty %}full-text{% endunless %}">
+              {% render 'multilang' with l.title %}
+              {% if linklists[l.handle] != empty %}
+              <span class="icon-dropdown" data-toggle-menu-mb>
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+              </span>
+              {% endif %}
+            </a>
+            {% if linklists[l.handle] != empty %}
+            <div class="dropdown dropdow-lv2 sub-menu-mobile menu-mb-translate">
+              <div class="menu-mb-title">
+                <span class="icon-dropdown no-event">
+                  <i class="fa fa-angle-left" aria-hidden="true"></i>
+                </span>
+                {% render 'multilang' with l.title %}
+              </div>
+
+              <ul class="site-nav-dropdown">
+                {% for child_l in linklists[l.handle].links %}
+                  <li class="menu-lv-3">
+                    <a class="third-menu {% if child_l.active %}current{% endif %}" href="{{ child_l.url }}">
+                      {% render 'multilang' with child_l.title %}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% if dpl_banner_bottom_style_2 %}
+  <div class="banner-bottom" style="background: {{banner_bottom_style_2_background}}">
+    <div class="container">
+      <p style="color: {{banner_bottom_style_2_text_color}}">{% render 'multilang' with banner_bottom_style_2_text %}</p>
+    </div>
+  </div>
+{% endif %}
+{% endif %}
+
+{% comment %}<!-- Mega menu style 3 -->{% endcomment %}
+
+{% if block_style == "style_3" %}
+<div class="container">
+  <div class="row">
+    {% if dpl_column_first_style_3 and banner_first_style != blank %}
+    <div class="banner col-12 {% if dpl_column_first_style_3 %}column-left col-md-12 col-lg-4 {% endif %}">
+      <div class="row">
+        {% if dpl_column_first_style_3 %}  
+          <div class="col-12 {% if dpl_column_second_style_3 %}col-md-6 {% else %}col-md-12 {% endif %} banner-first">
+            {% if banner_first_style != blank %}
+            <a href="{{ link_banner_first_style }}" title="" class="img-first">  
+              <img class="lazyload" data-srcset="{{ banner_first_style | img_url : '370x' }}" alt="" >
+            </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+     <div class="col-12 {% if dpl_column_first_style_3 and banner_first_style != blank %}column-right col-md-12 col-lg-8 has-banner {% elsif dpl_column_first_style_3 == false or banner_first_style == blank %}column-right col-md-12 col-lg-12 {% endif %}">
+      <div class="row hl-shuffle-container" style="-webkit-column-count: {{per_row_3}};column-count: {{per_row_3}}">
+        {% for l in linklists[link_child].links %}
+        <div class="inner col-12 col-md-12 col-lg-4">
+          <div class="inner-wrap menu-lv-2 dropdown">
+            <a href="{{ l.url }}" class="current second-menu {% unless linklists[l.handle] != empty %}full-text{% endunless %}">
+              {% render 'multilang' with l.title %}
+              {% if linklists[l.handle] != empty %}
+              <span class="icon-dropdown" data-toggle-menu-mb>
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+              </span>
+              {% endif %}
+            </a>
+            {% if linklists[l.handle] != empty %}
+            <div class="dropdown dropdow-lv2 sub-menu-mobile menu-mb-translate">
+              <div class="menu-mb-title">
+                <span class="icon-dropdown no-event">
+                  <i class="fa fa-angle-left" aria-hidden="true"></i>
+                </span>
+                {% render 'multilang' with l.title %}
+              </div>
+
+              <ul class="site-nav-dropdown">
+                {% for child_l in linklists[l.handle].links %}
+                  <li class="menu-lv-3">
+                    <a class="third-menu {% if child_l.active %}current{% endif %}" href="{{ child_l.url }}">
+                      {% render 'multilang' with child_l.title %}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+{% if block_style == "style_4" %}
+<div class="container">
+  <div class="row">
+    
+    <div class="col-12 {% if banner_first_style != blank or banner_second_style != blank or banner_third_style != blank %}col-xl-7{% else %}col-xl-12{% endif %}">
+          <div class="row" data-masonry='{ "itemSelector": "[data-gridItem]", "columnWidth": ".grid-sizer" }'>
+              <div class="grid-sizer"></div>
+
+              {% for l in linklists[link_child].links %}
+              <div data-gridItem class="menu-lv-2 inner{% if linklists[link_child] != empty %} dropdown{% endif %} col-12 {% if banner_first_style != blank or banner_second_style != blank or banner_third_style != blank %}col-xl-4{% else %}col5{% endif %}">
+                  <!-- Menu level 2 -->
+                  <a {%if linklists[link_child] != empty %}class="menu__moblie {% unless linklists[l.handle] != empty %}full-text{% endunless %}"{% endif %} href="{{ l.url }}" class="current">
+                      {% render 'multilang' with l.title %}
+
+                      {% if linklists[l.handle] != empty %}
+                      <span class="icon-dropdown" data-toggle-menu-mb>
+                          <i class="fa fa-angle-right" aria-hidden="true"></i>
+                      </span>
+                      {% endif %}
+                  </a>
+
+                  {% if linklists[l.handle] != empty %}
+                  <div class="sub-menu-mobile menu-mb-translate">
+                      <div class="menu-mb-title">
+                          <span class="icon-dropdown">
+                          <i class="fa fa-angle-left" aria-hidden="true"></i>
+                          </span>
+                          {% render 'multilang' with l.title %}
+                      </div>
+
+                      <ul class="site-nav-dropdown">
+                          {% for child_l in linklists[l.handle].links %}
+                          <!-- Menu level 3 -->
+                          <li class="menu-lv-3">
+                          <a href="{{ child_l.url }}" {% if child_l.active %}class="current"{% endif %}>
+                              {% render 'multilang' with child_l.title %}
+                          </a>
+                          </li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+                  {% endif %}
+              </div>
+              {% endfor %}
+          </div>
+      </div>
+
+    {% if banner_first_style != blank or banner_second_style != blank or banner_third_style != blank %}
+    <div class="col-12 col-xl-5">
+        <div class="mega-banner">
+            
+            {% if banner_first_style != blank %}
+            <div class="mega-col{% if banner_first_style != blank %} col-left{% endif %}">
+                <a class="animate-scale" href="{{ link_banner_first_style }}" title="">
+                    <img class="lazyload" data-srcset="{{ banner_first_style | img_url : '224x' }}" alt="" >
+                </a>
+            </div>
+            {% endif %}
+
+            {% if banner_second_style != blank or banner_third_style != blank %}
+            <div class="mega-col{% if banner_second_style != blank or banner_third_style != blank %} col-right{% endif %}">
+                {% if banner_second_style != blank %}
+                <a class="animate-scale" href="{{ link_banner_second_style }}" title="">
+                    <img class="lazyload" data-srcset="{{ banner_second_style | img_url : '224x' }}" alt="" >
+                </a>
+                {% endif %}
+
+                {% if banner_third_style != blank %}
+                <a class="animate-scale image-third" href="{{ link_banner_third_style }}" title="">
+                    <img class="lazyload" data-srcset="{{ banner_third_style | img_url : '224x' }}" alt="" >
+                </a>
+                {% endif %}
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endif %}

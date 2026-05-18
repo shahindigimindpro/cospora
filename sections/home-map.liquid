@@ -1,0 +1,271 @@
+{% if section.settings.enable %}
+<section class="homepage-map">
+  <div class="container">
+    <div id="MapSection--{{ section.id }}"
+         class="map-section
+                {% if display_map %}map-section--display-map{% endif %}
+                {% if onboarding == true %}map-section--onboarding{% endif %}"
+         data-section-id="{{ section.id }}"
+         data-section-type="map">
+      <div class="wrapper map-section__wrapper">
+        <div class="map-section__content-wrapper flex--half">
+          <div class="map-section__content">
+            {% if section.settings.heading != blank %}
+            <h3 class="title">{% render 'multilang' with  section.settings.heading %}</h3>
+            {% endif %}
+            {% if section.settings.address != blank %}
+            <div class="rte address">
+              {% render 'multilang' with  section.settings.address %}
+            </div>
+            {% if section.settings.map_address != blank and section.settings.button_text != blank %}
+            <p>
+              <a href="https://maps.google.com?daddr={{ section.settings.map_address | escape }}"
+                 class="btn btn--secondary map_section__directions-btn"
+                 target="_blank"
+                 >
+                {% if section.settings.show_pin %}
+                {% render 'icon-pin' %}
+                {% endif %}
+                {% if section.settings.button_text %}
+                {% render 'multilang' with  section.settings.button_text %}
+                {% endif %}
+              </a>
+            </p>
+            {% endif %}
+            {% endif %}
+          </div>
+        </div>
+        <div class="map-section__background-wrapper flex--half">
+          <div class="map-section__image img-box" style="display: block;height: 100%;">
+              <a href="https://maps.google.com?daddr={{ section.settings.map_address | escape }}" class="animate_hvrbr1">
+              {% if section.settings.layout == 'image' %}
+
+                {% if section.settings.background_image %}
+                  {%- assign img_url = section.settings.background_image | img_url: '2000x', crop: 'center' -%}
+                  <img data-src="{{ img_url }}" alt="{{ section.settings.background_image.alt | default: shop.name }}" itemprop="logo" {% render 'lazy_load' %}>
+                {% else %}
+                  <div class="no-image" style="padding-top:40%">
+                    <span> 1170 x 320px</span>
+                  </div>   
+                {% endif %}
+
+              {% else %}
+
+                {% if section.settings.code %}
+                  {% render 'multilang' with  section.settings.code %}
+                {% else %}
+                  <div class="no-image" style="padding-top:40%">
+                    <span> 1170 x 320px</span>
+                  </div>   
+                {% endif %}
+
+              {% endif %}
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{%endif %}
+
+<style>
+  #MapSection--{{ section.id }} .map-section__content-wrapper {
+    background: {{ section.settings.back_detail }};
+  }
+  #MapSection--{{ section.id }} .map-section__content-wrapper .title {
+    color: {{ section.settings.color_heading }};
+  }
+  #MapSection--{{ section.id }} .map-section__content-wrapper .address {
+    color: {{ section.settings.color_address }};
+  }
+  #MapSection--{{ section.id }} .map-section__content-wrapper .btn {
+    background: {{ section.settings.back_view }};
+    color: {{ section.settings.color_view }};
+    border-color: {{ section.settings.color_view }};
+  } 
+  #MapSection--{{ section.id }} .map-section__content-wrapper .btn:hover {
+     background: {{ section.settings.back_view_hover }};
+    color: {{ section.settings.color_view_hover }};
+    border-color: {{ section.settings.color_view_hover }};
+  } 
+  /   --------------magin-bottom------- /
+  @media (max-width: 767px) {
+    #MapSection--{{ section.id }} {
+      margin-bottom: {{ section.settings.margin_bottom_mb }}px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1199px) {
+    #MapSection--{{ section.id }} {
+      margin-bottom: {{ section.settings.margin_bottom_tab }}px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    #MapSection--{{ section.id }} {
+      margin-bottom: {{ section.settings.margin_bottom }}px;
+    }
+  }
+
+</style>
+{% schema %}
+{
+  "name":"Map",
+  "class": "index-section",
+  "settings": [
+    {
+      "type":"checkbox",
+      "id":"enable",
+      "label":"Enable ?",
+      "default":true
+    },
+    {
+      "type": "header",
+      "content": "Margin Bottom:"
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_mb",
+      "label": "Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom_tab",
+      "label": "Tablet",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 40
+    },             
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Margin Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 45
+    },  
+    {
+      "type": "header",
+      "content":"Map Content"
+    },
+    {
+      "type":"color",
+      "id":"back_detail",
+      "label":"background",
+      "default":"#f6f8fa"
+    },
+    {
+      "id": "heading",
+      "type": "text",
+      "label":"Heading",
+      "default": "Our store" 
+    },
+    {
+      "type":"color",
+      "id":"color_heading",
+      "label":"Heading Color",
+      "default":"#2d2d2d"
+    },
+    {
+      "id": "address",
+      "type": "richtext",
+      "label":"Address and hours" ,
+      "default":"<p>123 Fake St.<br>Toronto, Canada</p><p>Mon - Fri, 10am - 9pm<br>Saturday, 11am - 9pm<br>Sunday, 11am - 5pm</p>"
+    },
+    {
+      "type":"color",
+      "id":"color_address",
+      "label":"Adress Color",
+      "default":"#505050"
+    },
+    {
+      "id": "map_address",
+      "type": "text",
+      "label":"Map address",
+      "info": "Google Maps will find the exact location",
+      "default": "80 Spadina Ave, Toronto"
+    },
+    {
+      "id": "button_text",
+      "type": "text",
+      "label":"Map link label",
+      "default": "Get directions"
+    },
+    {
+      "id": "show_pin",
+      "type": "checkbox",
+      "label":  "Show pin",
+      "default": true
+    },
+    {
+      "type":"color",
+      "id":"back_view",
+      "label":"Background Button",
+      "default":"#2a5ee1"
+    },
+    {
+      "type":"color",
+      "id":"color_view",
+      "label":"Color Text Buttton",
+      "default":"#fff",
+      "info":"======================"
+    },
+    {
+      "type":"color",
+      "id":"back_view_hover",
+      "label":"Background Hover Button ",
+      "default":"#ea3b02"
+    },
+    {
+      "type":"color",
+      "id":"color_view_hover",
+      "label":"Color Text Hover Buttton",
+      "default":"#fff",
+      "info":"======================"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+        "type": "select",
+        "id": "layout",
+        "label": "Select:",
+        "options": [
+            {
+                "value": "image",
+                "label": "Image"
+            },
+            {
+                "value": "html",
+                "label": "Embed"
+            }
+        ],
+        "default": "image"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label":"Background Image"
+    },
+    {
+      "type": "html",
+      "id": "code",
+      "label": "Embed HTML"
+    }
+  ],
+  "presets": [
+    {
+      "name":"Map",
+      "category": "Map"
+    }
+  ]
+}
+{% endschema %}

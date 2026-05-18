@@ -1,0 +1,58 @@
+{% render 'product-default' %}
+
+{% if template contains 'product' %}
+
+<div class="modal fade halo_modal-custom" id="video_product" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a data-dismiss="modal" class="close close-modal" title="{{ 'cart.ajax_cart.close' | t }}" href="javascript:void(0)">
+                    {% render 'icon-close' %}
+                </a>
+            </div>
+
+            <div class="modal-body">
+                <div class="videoWrapper">
+                    {% if product.metafields.c_f['Product Video'] %}
+                      {% capture video_id %}{{ product.metafields.c_f['Product Video'] }}{% endcapture %}
+                      <iframe width="100%" data-video-id="{{video_id }}"  class="lazyload" height="100%" id="video_pr" src="//www.youtube.com/embed/{{video_id}}?enablejsapi=1&html5=1?autoplay=1&mute=1" frameborder="0" allowfullscreen></iframe>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="themevale_popup">
+  {% section 'someone-purchased' %}
+  {% section 'cookie_popup' %}
+</div>
+{% endif %}
+{% if product.metafields.c_f['Product Video'] %}
+<script>
+     var player;
+     // Inject YouTube API script
+    var tag = document.createElement('script');
+    tag.src = "//www.youtube.com/player_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    function onYouTubePlayerAPIReady() {
+        player = new YT.Player('video_pr', {
+            events: {
+                'onReady': onYoutubeReady
+            }
+        });
+    }
+    function onYoutubeReady(event) {
+        var playButton = document.querySelector(".product .video-open-popup");
+        playButton.addEventListener("click", function() {
+            player.playVideo();
+        });
+        var pauseButton = document.querySelector("#video_product .close-modal, #video_product");
+        pauseButton.addEventListener("click", function() {
+            player.pauseVideo();
+        });
+    }
+</script>
+{% endif %}

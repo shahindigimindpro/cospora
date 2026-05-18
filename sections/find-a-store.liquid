@@ -1,0 +1,406 @@
+{% if section.settings.display_find_a_store %}
+<section id="find-a-store">
+    <div class="page-content find-a-store">
+        <div class="top-content-find">
+            <div class="left-content-find">
+                <span>{% render 'multilang' with section.settings.title_find %}</span>
+                <p>{% render 'multilang' with section.settings.des_find %}</p>
+            </div>
+            <div class="right-content-find">
+                <div class="search_map"></div>
+            </div>
+        </div>
+        <div class="bottom-content-find">
+            <div class="HL-ColLeft col-sm-4 col-md-4">
+                <div class="InfoFind">            
+                    <div class="InfoFindInner ENV_maps_list"></div>
+                </div>
+            </div>
+            <div class="HL-ColRight col-sm-8 col-md-8">
+                <div class="mapContact ENV_maps__div" style="position: relative; overflow: hidden;"></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endif %}
+
+<style>
+.page-content.find-a-store {
+    width: 100%;
+    overflow: hidden
+}
+.find-a-store .left-content-find {
+    float: left;
+    width: 45%;
+    padding-bottom: 65px;
+}
+.find-a-store .right-content-find {
+    float: right;
+    width: 55%;
+    padding-top: 35px;
+}
+.find-a-store .left-content-find span {
+    font-family: Oswald,sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    color: #000;
+    display: block;
+    margin-bottom:  15px;
+}
+.find-a-store .left-content-find p{
+  margin-bottom: 0;
+}
+.ENV_maps__div {
+    min-height: 577px !important;
+}
+.ENV_maps_elist {
+    margin-bottom: 10px;
+}
+
+.ENV_maps__div_search {
+    margin-bottom: 72px;
+}
+.ENV_maps__div_search {
+    position: relative;
+    padding-right: 95px;
+}
+.ENV_maps__div_search span:before {
+    content: 'Search';
+}
+
+.ENV_maps__div_search input#ENV_maps__input_search {
+    width: 89%;
+    margin-bottom: 10px;
+    max-width: 100%;
+}
+/* width */
+.InfoFind::-webkit-scrollbar {
+    width: 4px;
+}
+
+/* Track */
+.InfoFind::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+ 
+/* Handle */
+.InfoFind::-webkit-scrollbar-thumb {
+    background: #505050; 
+}
+
+/* Handle on hover */
+.InfoFind::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+@media (max-width: 1200px){
+    .ENV_maps__div_search input#ENV_maps__input_search {
+        width: 85%;
+    }
+}
+@media (max-width: 992px){
+    .ENV_maps__div_search input#ENV_maps__input_search {
+        width: 89%;
+    }
+}
+@media (max-width: 768px){
+    .ENV_maps__div_search input#ENV_maps__input_search {
+        width: 84%;
+    }
+}
+@media (max-width: 620px){
+    .ENV_maps__div_search input#ENV_maps__input_search {
+        width: 84%;
+    }
+}
+@media (max-width: 490px){
+    .ENV_maps__div_search input#ENV_maps__input_search {
+        width: 81%;
+    }
+}
+@media (max-width: 400px){
+    .ENV_maps__div_search input#ENV_maps__input_search {
+        width: 75%;
+    }
+}
+@media (max-width: 320px){
+    .ENV_maps__div_search input#ENV_maps__input_search {
+        width: 70%;
+    }
+}
+
+#ENV_maps__input_search {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    border-color: #d0d0d0;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    color: #454545;
+    display: block;
+    font-family: inherit;
+    font-size: 1rem;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    height: 40px;
+    margin: 0;
+    padding: .75rem 1rem;
+    transition: border-color .1s ease-out;
+    width: 100%;
+}
+.right-content-find .btn {
+    font-size: 1rem;
+    font-weight: 700;
+    height: 40px;
+    padding: 0 38px;
+    border-radius: 0;
+    background: #fff;
+}
+.ENV_maps__div_search .btn {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-block;
+    padding: 8px 52px;
+    color: #fff;
+    border: 1px solid #000;
+    background: #000;
+    text-transform: uppercase;
+    border-radius: 3px;
+    font-weight: 500;
+    font-size: 13px;
+}
+.InfoFindInner.ENV_maps_list > div:hover {
+    background: #fafafa;
+    cursor: pointer;
+}
+.InfoFindInner.ENV_maps_list > div:hover h4{
+  background-image: linear-gradient(#fff 97%, #000 3%);
+  background-repeat: repeat-x;
+  background-position-y: -14px;
+}
+.ENV_maps__div_search .btn:hover {
+    color: white;
+    border: 1px solid #e7040f;
+    background-color: #e7040f;
+}
+.ENV_maps_window.ENV_maps_html .name {   
+    font-size: 13px;
+    font-weight: bold;
+}
+.ENV_maps_window.ENV_maps_html .text h4 {
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.ENV_maps_window.ENV_maps_html .text a {   
+    font-size: 13px;
+    text-decoration: none;
+}
+.HL-ContactForm .HL-ColRight {
+    display: block;
+    overflow: hidden;
+    margin-bottom: 20px;
+    float: right;
+}
+.InfoFind {
+    max-height: 577px;
+    overflow-y: scroll;
+    /* background: rgba(245, 245, 245, 0.1); */
+    /* padding: 20px 25px 20px 25px; */
+    border: 1px solid #ececec;
+    border-radius: 3px;
+}
+.TitleHeading {
+    margin-bottom: 0px;
+    border-bottom: 1px solid transparent!important;
+    font-size: 20px;
+    margin-top: 20px;
+    padding: 0 0 5px 0;
+    color: #000;
+    font-weight: bold;
+}
+.InfoFindInner.ENV_maps_list > div {
+    display: block;
+    padding: 10px 10px 10px 25px;
+    border-bottom: 1px solid #ececec;
+}
+.InfoFind.ENV_maps_list .ENV_maps_elist > span, .InfoFindInner.ENV_maps_list .ENV_maps_elist > span {
+    overflow: hidden;
+    line-height: 20px;
+    font-size: 12px;
+}
+.ENV_maps_elist.ENV_maps_html > span.name > strong {
+    display: block;
+    padding: 10px 5px 15px;
+    text-align: center;
+    clear: both;
+    font-weight: 700;
+    font-size: 18px;
+}
+.ENV_maps_elist strong {
+    font-weight: 400;
+    margin-top: 9px;
+    display: block;
+}
+.InfoFind.ENV_maps_list > div h4, .InfoFindInner.ENV_maps_list > div h4 {
+    margin-bottom: 0;
+    padding-bottom: 15px;
+    font-size: 12px;
+    display: inline-block;
+    font-weight: 500;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    color: #000;
+}
+.InfoFind.ENV_maps_list .ENV_maps_elist > span a, .InfoFindInner.ENV_maps_list .ENV_maps_elist > span a {
+    color: #0887e4;
+    text-decoration: none;
+}
+@media (max-width: 991px){
+    .find-a-store .col-md-8 {
+        width: 100%;
+        float: left;
+        max-width: 100%;
+        padding:  0;
+    }
+    .find-a-store .col-md-4 {
+        width: 100%;
+        float: left;
+        margin-bottom: 25px;
+        max-width: 100%;
+        padding:  0;
+    }
+    .find-a-store .left-content-find {
+        width: 100%;
+        padding-bottom: 20px;
+    }
+    .find-a-store .right-content-find {
+      width: 100%;
+      padding-top: 0;
+    }
+    .ENV_maps__div_search {
+        margin-bottom: 30px;
+    }
+}
+@media (max-width: 768px){
+    .InfoFind {
+        max-height: 305px;
+    }
+}
+@media (min-width: 992px){
+   
+    .find-a-store .col-md-8 {
+        width: 66.66666667%;
+        float: left;
+        padding-right: 0px;
+        padding-left: 15px;
+        /* margin-top: 25px; */
+    }
+    .find-a-store .col-md-4 {
+        width: 33.33333333%;
+        float: left;
+        padding-right: 15px;
+        padding-left: 0px;
+        /* margin-top: 25px; */
+    }
+}
+</style>
+
+<script type="text/javascript" src="{{ 'maps.js' | asset_url }}"></script>
+
+<script type="text/javascript">
+var ENVmap = new ENV_map();
+var option = {
+    "token": "Envora_free",
+    "get_list": ".InfoFindInner",
+    "get_map": ".HL-ColRight .mapContact",
+    "get_search": ".search_map",
+    "data": [
+      {% for block in section.blocks %}
+        {//Northwest
+          "lat": {{ block.settings.lat }},
+          "lng": {{ block.settings.lng }},
+          "name": "{{ block.settings.name }}",
+          "text": "{{ block.settings.content }}"
+        },
+      {% endfor %}
+    ],
+    "zoom": 4,
+};
+ENVmap.config = function() {
+    this.vars.icon_defaults = {
+        'url': 'https://image.flaticon.com/icons/png/512/565/565586.png',
+    };
+};
+ENVmap.view(option);
+</script>
+
+{% schema %}
+  {
+    "name": "Find A Store",
+    "class": "section-find-a-store",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Find A Store"
+      },
+      {
+          "type": "checkbox",
+          "id": "display_find_a_store",
+          "label": "Enable",
+          "default": true
+      },
+      {
+          "type" : "text",
+          "id" : "title_find",
+          "label" : "Title",
+          "default" : "Find Store Location Near You"
+      },
+      {
+          "type" : "textarea",
+          "id" : "des_find",
+          "label" : "Description"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "item",
+        "name": "Item Find A Store",
+        "settings": [
+          {
+            "type" : "textarea",
+            "id" : "content",
+            "label" : "Content"
+          },
+          {
+            "type" : "text",
+            "id" : "name",
+            "label" : "Name"
+          },
+          {
+            "type" : "text",
+            "id" : "lat",
+            "label" : "Lat"
+          }, 
+          {
+            "type" : "text",
+            "id" : "lng",
+            "label" : "Lng"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

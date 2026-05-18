@@ -1,0 +1,274 @@
+{% if section.settings.display_gdpr %}
+<div id="accept-cookies" class="cookieMessage {% if section.settings.show_gdp == 'right' %}cookies-right{% else %}cookies-left{% endif %}" >
+  
+  <div class="block-cookies">
+
+    <div class="des">
+       {% render 'multilang' with section.settings.content %}
+    </div>
+
+    <div class="btn-bottom">
+      {% if section.settings.text_btn != blank  %}
+      <a href="javascript:void(0)" class="btn-accept" data-accept-cookie>
+        {% render 'multilang' with section.settings.text_btn %}
+      </a>
+      {% endif %}
+
+      {% if section.settings.policy_text != blank  %}
+      <a target="_blank" class="privacy_policy" href="{{section.settings.policy_link}}">{% render 'multilang' with section.settings.policy_text %}</a>
+      {% endif %}
+    </div>
+    <a href="javascript:void(0)" data-accept-cookie title="Close" class="close-window">{% render 'icon-close' %}</a>
+  </div>
+  <style>
+    @media (max-width: 1199px) {
+      .product-notification{
+        bottom: 210px;
+      }
+      .show_sticky #accept-cookies {
+        bottom: 65px!important;
+        transition: bottom .35s ease-in-out;
+        margin-bottom: 15px;
+      }
+      .show_sticky .product-notification {
+        bottom: 260px!important;
+        transition: bottom .35s ease-in-out;
+      }
+    }
+    @media (max-width: 1024px){
+      .show_sticky .product-notification{
+          bottom: 275px;
+      }
+      .countdown-css.show_sticky .product-notification{
+          bottom: 313px;
+      }
+    }
+    @media (max-width: 768px) {
+      .countdown-css.show_sticky #accept-cookies {
+          bottom: 92px!important;
+          transition: bottom .35s ease-in-out;
+          margin-bottom: 15px;
+      }
+      .countdown-css.show_sticky .product-notification {
+          bottom: 286px!important;
+          transition: bottom .35s ease-in-out;
+      }
+    }
+    @media (max-width: 479px) {
+      .product-notification{
+        bottom: 149px;
+      }
+      .show_sticky .product-notification{
+          bottom: 206px!important;
+          transition: bottom .35s ease-in-out;
+          margin-bottom: 0;
+      }
+       .countdown-css.show_sticky #accept-cookies {
+        bottom: 85px!important;
+        transition: bottom .35s ease-in-out;
+        margin-bottom: 0;
+      }
+      .countdown-css.show_sticky .product-notification {
+          bottom: 233px!important;
+          transition: bottom .35s ease-in-out;
+          margin-bottom: 0;
+      }
+      .show_sticky #accept-cookies{
+          bottom: 58px!important;
+          transition: bottom .35s ease-in-out;
+          margin-bottom: 0;
+      }
+    }
+    @media (max-width: 320px) {
+      .product-notification{
+        bottom: 169px;
+      }
+      .show_sticky .product-notification{
+        bottom: 226px!important;
+        transition: bottom .35s ease-in-out;
+        margin-bottom: 0;
+      }
+      .countdown-css.show_sticky #accept-cookies {
+          bottom: 89px!important;
+          transition: bottom .35s ease-in-out;
+          margin-bottom: 0;
+      }
+      .countdown-css.show_sticky .product-notification {
+          bottom: 257px!important;
+          transition: bottom .35s ease-in-out;
+          margin-bottom: 0;
+      }
+    }
+    @media (min-width: 1200px) {
+      .show_sticky #accept-cookies, .show_sticky .product-notification {
+        bottom: 65px!important;
+        transition: bottom .35s ease-in-out;
+      }
+    }
+  </style> 
+</div>
+<style>
+  #accept-cookies{
+    background: {{section.settings.bg_color | color_modify: 'alpha', 0.8 }};
+  }
+  #accept-cookies .block-cookies .des{
+    color:{{section.settings.text_color}};
+  }
+  #accept-cookies .block-cookies .btn-accept {
+    color: {{section.settings.btn_text_color}};
+  }
+  #accept-cookies .block-cookies .btn-accept .icon:before {
+    border: 2.5px solid {{section.settings.btn_text_color}};
+  }
+  #accept-cookies .block-cookies .btn-accept:hover {
+    color: {{section.settings.btn_text_color_hover}};
+  }
+  #accept-cookies .block-cookies .btn-bottom .privacy_policy {
+    color: {{section.settings.link_color}};
+    background: transparent;
+    border: none;
+    font-weight: 400;
+  }
+  #accept-cookies .block-cookies .btn-bottom .privacy_policy span{
+    border-bottom: 1px solid {{section.settings.link_color}};
+  }
+  #accept-cookies .block-cookies .btn-bottom .privacy_policy:hover {
+    color: {{section.settings.link_color_hover}};
+    background: transparent;
+    border: none;
+  }
+
+  @media (min-width: 1025px) {
+    #accept-cookies{
+      {% if section.settings.show_gdp == 'right' %}
+        right: 15px;
+      {% else %}
+        left: 15px;
+      {% endif %}
+    }
+  }
+
+  
+
+</style>
+<script>
+    $(document).ready(function() {
+        var gdprCookie = $('#accept-cookies');
+
+        gdprCookie.show();
+
+        if ($.cookie('cookieMessage') == 'closed') {
+            gdprCookie.remove();
+            $('.product-notification').addClass('no-bottom');
+        }
+
+        gdprCookie.find('[data-accept-cookie]').on('click', function(e) {
+            e.preventDefault();
+            gdprCookie.remove();
+            $.cookie('cookieMessage', 'closed', {expires: 1, path:'/'});
+            $('.product-notification').addClass('no-bottom');
+        });
+    })
+
+</script>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "GDPR Cookie Popup",
+    "settings": [
+    {
+        "type": "checkbox",
+        "id": "display_gdpr",
+        "label": "Enable",
+        "default": true
+      },
+      {
+      "type": "radio",
+      "id": "show_gdp",
+      "label": "Show GDPR Cookie Popup on the",
+      "options": [
+      {
+      "value": "left",
+      "label": "Left"
+      },
+      {
+      "value": "right",
+      "label": "Right"
+      }
+      ],
+      "default": "right"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#323232"
+      },
+     {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "textarea",
+        "id": "content",
+        "label": "Description text",
+        "default": "The cookie settings on this website are set to 'allow all cookies' to give you the very best experience. Please click Accept Cookies to continue to use the site."
+      },
+      {
+        "type" : "header",
+        "content" : "Accept Button"
+      },
+      {
+        "type": "text",
+        "id": "text_btn",
+        "label": "Button text",
+        "default": "Accept Cookies"
+      },
+      {
+        "type": "color",
+        "id": "btn_text_color",
+        "label": "Text Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "btn_text_color_hover",
+        "label": "Text Color Hover",
+        "default": "#ffffff"
+      },
+      {
+        "type" : "header",
+        "content" : "Privacy Policy Link"
+      },
+      {
+        "type": "text",
+        "id": "policy_text",
+        "label": "Text",
+        "default": "Privacy Policy"
+      },
+      {
+        "type": "url",
+        "id": "policy_link",
+        "label": "URL of your Privacy Policy",
+        "info": "https:\/\/policies.google.com"
+      },
+      {
+        "type": "color",
+        "id": "link_color",
+        "label": "Link Color",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "link_color_hover",
+        "label": "Link Color Hover",
+        "default": "#ffffff"
+      }
+  ]
+  }
+{% endschema %}
+
+
