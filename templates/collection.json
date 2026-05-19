@@ -11,7 +11,43 @@
   "sections": {
     "main": {
       "type": "main-collection",
-      "settings": {}
+      "blocks": {
+        "filter_text_pXeqBd": {
+          "type": "filter_text",
+          "settings": {
+            "enable": true,
+            "title": "",
+            "list_tags": ""
+          }
+        },
+        "filter_color_YpVANp": {
+          "type": "filter_color",
+          "settings": {
+            "enable": true,
+            "title": "",
+            "color_text_1": "",
+            "color_text_2": "",
+            "color_text_3": ""
+          }
+        }
+      },
+      "block_order": [
+        "filter_text_pXeqBd",
+        "filter_color_YpVANp"
+      ],
+      "settings": {
+        "display_sidebar": true,
+        "enable_categories": true,
+        "title_categories": "Categories",
+        "style_categories": "style_show_all",
+        "link_list": "main-menu",
+        "enable_product": true,
+        "title_product": "",
+        "collection": "new",
+        "limit": "8",
+        "collection_results_per_row": "4",
+        "collection_results_per_page": "24"
+      }
     }
   },
   "order": [
