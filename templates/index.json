@@ -19,9 +19,161 @@
         "margin_bottom_tab": 20,
         "margin_bottom": 38
       }
+    },
+    "home_featured_products_LPYjNF": {
+      "type": "home-featured-products",
+      "name": "Home Featured Products",
+      "settings": {
+        "show_home_featured_product": true,
+        "space_on": 0,
+        "space_below": 0,
+        "show_slider_feature_collection": "",
+        "slider_feature_title": "Featured Products",
+        "slider_feature_limit_all": 6,
+        "feature_collection_results_per_row": "5"
+      }
+    },
+    "home_blog_posts_gULjfw": {
+      "type": "home-blog-posts",
+      "name": "Home Blog posts",
+      "settings": {
+        "blog_posts": "",
+        "blog_results_per_row": "2",
+        "post_limit": 3,
+        "blog_show_author": true,
+        "blog_show_date": true,
+        "blog_post_title": "",
+        "margin_bottom_mb": 20,
+        "margin_bottom_tab": 20,
+        "margin_bottom": 50,
+        "button_readmore": "Read More"
+      }
+    },
+    "home_new_products_tab_4ryDAr": {
+      "type": "home-new-products-tab",
+      "blocks": {
+        "new_product_tabs_QM9J4C": {
+          "type": "NewProductTabs",
+          "settings": {
+            "title": "Makeup",
+            "collection": ""
+          }
+        }
+      },
+      "block_order": [
+        "new_product_tabs_QM9J4C"
+      ],
+      "name": "Home New Products Tab",
+      "settings": {
+        "show_home_new_products_tab": true,
+        "space_on": 0,
+        "space_below": 60,
+        "new_product_tab_title": "New Products",
+        "layout_style": "carousel",
+        "color_tab": "#2d2d2d",
+        "color_text_tab": "#2d2d2d",
+        "color_border_tab": "#eaeaea",
+        "color_background_tab": "#fff",
+        "limit_product": 6,
+        "products_tab_results_per_row": "5"
+      }
+    },
+    "home_map_pRkTx3": {
+      "type": "home-map",
+      "name": "Map",
+      "settings": {
+        "enable": true,
+        "margin_bottom_mb": 40,
+        "margin_bottom_tab": 40,
+        "margin_bottom": 45,
+        "back_detail": "#f6f8fa",
+        "heading": "Our store",
+        "color_heading": "#2d2d2d",
+        "address": "<p>123 Fake St.<br/>Toronto, Canada</p><p>Mon - Fri, 10am - 9pm<br/>Saturday, 11am - 9pm<br/>Sunday, 11am - 5pm</p>",
+        "color_address": "#505050",
+        "map_address": "80 Spadina Ave, Toronto",
+        "button_text": "Get directions",
+        "show_pin": true,
+        "back_view": "#2a5ee1",
+        "color_view": "#fff",
+        "back_view_hover": "#ea3b02",
+        "color_view_hover": "#fff",
+        "layout": "image",
+        "code": ""
+      }
+    },
+    "slideshow_t76hqw": {
+      "type": "slideshow",
+      "blocks": {
+        "image_VDx89j": {
+          "type": "image",
+          "settings": {
+            "dpl_slide_img": true,
+            "alignment": "left",
+            "heading": "Cosmopolis",
+            "font_size_heading": "40px",
+            "color_heading": "#232323",
+            "slide-des": "Quisquemos sodales suscipit tortor ditaemcos condimentum de cosmo lacus meleifend menean diverra loremous.",
+            "font_size_des": "12px",
+            "color_des": "#232323",
+            "button_slide": "Shop The Collection",
+            "link": "",
+            "bg_button": "#000",
+            "border_button": "#000",
+            "color_button": "#fff",
+            "lb_product_1": "",
+            "top_position_1": "10",
+            "left_position_1": "10",
+            "dots_color_1": "#fff",
+            "dots_bg_color_1": "#323232",
+            "dots_shadow_color_1": "#fff",
+            "lb_product_2": "",
+            "top_position_2": "10",
+            "left_position_2": "10",
+            "dots_color_2": "#fff",
+            "dots_bg_color_2": "#323232",
+            "dots_shadow_color_2": "#fff",
+            "lb_product_3": "",
+            "top_position_3": "10",
+            "left_position_3": "10",
+            "dots_color_3": "#fff",
+            "dots_bg_color_3": "#323232",
+            "dots_shadow_color_3": "#fff"
+          }
+        }
+      },
+      "block_order": [
+        "image_VDx89j"
+      ],
+      "name": "Slideshow",
+      "settings": {
+        "layout": "full",
+        "margin_bottom_mb": 20,
+        "margin_bottom_tab": 20,
+        "margin_bottom": 30,
+        "autoplay": true,
+        "slideshow_speed": "5000",
+        "slideshow_transition": "true",
+        "dots": "true",
+        "dots_color": "#9E9C9B",
+        "dots_active_color": "#9E9C9B",
+        "dots_opacity": false,
+        "arrow_color": "#1c1c1c",
+        "position_slick_arrow": "-67px",
+        "min_width_banner_button": "",
+        "bg_video": "#866965",
+        "bg_overlay_opacity": 40,
+        "video_height": "41.7%",
+        "auto_playvideo": true
+      }
     }
   },
   "order": [
-    "home_richtext_BAnqyU"
+    "home_richtext_BAnqyU",
+    "home_featured_products_LPYjNF",
+    "home_blog_posts_gULjfw",
+    "home_new_products_tab_4ryDAr",
+    "home_map_pRkTx3",
+    "slideshow_t76hqw"
   ]
 }
