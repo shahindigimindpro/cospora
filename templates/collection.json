@@ -9,12 +9,17 @@
  */
 {
   "sections": {
+    "sidebar": {
+      "type": "sidebar-section",
+      "settings": {}
+    },
     "main": {
       "type": "collection-template-default",
       "settings": {}
     }
   },
   "order": [
+    "sidebar",
     "main"
   ]
 }
