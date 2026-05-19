@@ -7,7 +7,6 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-
 {
   "sections": {
     "home_richtext_BAnqyU": {
@@ -28,7 +27,7 @@
         "show_home_featured_product": true,
         "space_on": 0,
         "space_below": 0,
-        "show_slider_feature_collection": "",
+        "show_slider_feature_collection": "new",
         "slider_feature_title": "Featured Products",
         "slider_feature_limit_all": 6,
         "feature_collection_results_per_row": "5"
@@ -156,8 +155,8 @@
         "slideshow_speed": "5000",
         "slideshow_transition": "true",
         "dots": "true",
-        "dots_color": "#9E9C9B",
-        "dots_active_color": "#9E9C9B",
+        "dots_color": "#9e9c9b",
+        "dots_active_color": "#9e9c9b",
         "dots_opacity": false,
         "arrow_color": "#1c1c1c",
         "position_slick_arrow": "-67px",
