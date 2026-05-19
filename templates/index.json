@@ -1,5 +1,27 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "name": "Index",
-  "sections": {},
-  "order": []
+  "sections": {
+    "home_richtext_BAnqyU": {
+      "type": "home-richtext",
+      "name": "Rich text",
+      "settings": {
+        "title": "Talk about your brand",
+        "text_des": "<p>Nutzen Sie diesen Text, um Infos über Ihre Marke mitzuteilen. Beschreiben Sie ein Produkt, kündigen Sie etwas an oder heißen Sie Kunden willkommen.</p>",
+        "margin_bottom_mb": 45,
+        "margin_bottom_tab": 20,
+        "margin_bottom": 38
+      }
+    }
+  },
+  "order": [
+    "home_richtext_BAnqyU"
+  ]
 }
