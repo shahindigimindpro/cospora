@@ -11,7 +11,18 @@
   "sections": {
     "main": {
       "type": "collection-template-default",
-      "settings": {}
+      "settings": {
+        "display_collection_image": true,
+        "collection_image": "shopify://shop_images/bg-breadcrumb.jpg",
+        "display_collection_des": true,
+        "display_sub_categries": true,
+        "sub_collection_title": "Sub Categories",
+        "viewas_enable": true,
+        "limited_view": true,
+        "sort_enable": true,
+        "collection_results_per_row": "4",
+        "collection_results_per_page": "24"
+      }
     }
   },
   "order": [
