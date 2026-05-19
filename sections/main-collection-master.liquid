@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-xl-3 col-sidebar">
+      {% section 'sidebar-section' %}
+    </div>
+    
+    <div class="col-12 col-xl-9 col-main">
+      {% include 'collection-template-default' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Master",
+  "settings": []
+}
+{% endschema %}
