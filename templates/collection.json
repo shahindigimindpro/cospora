@@ -9,54 +9,12 @@
  */
 {
   "sections": {
-    "sidebar": {
-      "type": "sidebar-section",
-      "blocks": {
-        "image_KVfgKN": {
-          "type": "image",
-          "settings": {
-            "enable": true,
-            "image": "shopify://shop_images/bob_superstay_liquid_lipstick_all_1d82eec5-348a-456b-bdec-8c1afb8da0a4.jpg",
-            "link": ""
-          }
-        },
-        "product_zPFWFR": {
-          "type": "product",
-          "settings": {
-            "enable": true,
-            "title": "",
-            "collection": "",
-            "limit": "8"
-          }
-        }
-      },
-      "block_order": [
-        "image_KVfgKN",
-        "product_zPFWFR"
-      ],
-      "settings": {
-        "display_sidebar": true,
-        "show_sidebar": "left"
-      }
-    },
     "main": {
-      "type": "collection-template-default",
-      "settings": {
-        "display_collection_image": true,
-        "collection_image": "shopify://shop_images/bg-breadcrumb.jpg",
-        "display_collection_des": true,
-        "display_sub_categries": true,
-        "sub_collection_title": "Sub Categories",
-        "viewas_enable": true,
-        "limited_view": true,
-        "sort_enable": true,
-        "collection_results_per_row": "4",
-        "collection_results_per_page": "24"
-      }
+      "type": "main-collection-master",
+      "settings": {}
     }
   },
   "order": [
-    "sidebar",
     "main"
   ]
 }
