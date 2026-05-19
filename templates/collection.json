@@ -45,7 +45,7 @@
         "title_product": "",
         "collection": "new",
         "limit": "8",
-        "collection_results_per_row": "4",
+        "collection_results_per_row": "5",
         "collection_results_per_page": "24"
       }
     }
