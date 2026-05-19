@@ -1,0 +1,408 @@
+{% if cart.attributes.pagination != blank and cart.attributes.pagination %}
+  {% assign product_per_page = cart.attributes.pagination %}
+{% else %}
+  {% assign product_per_page = section.settings.collection_results_per_page %}
+{% endif %}
+
+{% paginate collection.products by product_per_page %}
+ 
+{% case section.settings.collection_results_per_row %}
+  {% when '1' %}
+    {%- assign grid_item_width = 'col-12' -%}
+	{%- assign rows = 'products-list' -%}
+  {% when '2' %}
+    {%- assign grid_item_width = 'col-6' -%}
+	{%- assign rows = 'products-grid' -%}
+  {% when '3' %}
+    {%- assign grid_item_width = 'col-6 col-md-4' -%}
+	{%- assign rows = 'products-grid' -%}
+  {% when '4' %}
+    {%- assign grid_item_width = 'col-6 col-md-4 col-lg-3' -%}
+	{%- assign rows = 'products-grid' -%}
+  {% when '5' %}
+    {%- assign grid_item_width = 'col-6 col-md-4 col-lg-3 col5' -%}
+	{%- assign rows = 'products-grid' -%}
+{% endcase %}
+
+<div class="container-fluid halo-collection-content" data-section-id="{{ section.id }}" data-section-type="collection-template" style="margin-top: 30px;">
+  <div class="row">
+    
+    {% if section.settings.display_sidebar %}
+    <div class="col-12 col-xl-3 col-sidebar">
+      
+      <div class="sidebar" data-sticky-sidebar>
+          <a href="javascript:void(0)" title="{{ 'cart.general.close_cart' | t }}" class="close-sidebar close">
+              {% render 'icon-close' %}    
+          </a>
+        
+          {% if section.settings.enable_categories %}
+          <div class="widget sidebar-links">
+              {% if section.settings.title_categories != blank %}
+              <div class="widget-title">
+                  <h3 class="sidebar-title">{% render 'multilang' with section.settings.title_categories %}</h3>
+              </div>
+              {% endif %}
+              <div class="widget-content">
+                  <ul>
+                      {% if section.settings.style_categories == 'style_show_all' %}
+                        {% for category in collections %}
+                        <li>
+                            <a href="{{ category.url }}" {% if collection.handle == category.handle %}class="active"{% endif %}>              
+                                {% render 'multilang' with category.title %}
+                            </a>
+                        </li>     
+                        {% endfor %}
+                      {% elsif section.settings.style_categories == 'style_main_menu' %}
+                        {% for link in linklists.main-menu.links %}
+                        {% if link.url contains '/collections/' %}
+                        <li class="sidebar-link-lv1 {% if linklists[link.handle] != empty %} dropdown{% if link.active %} open{% endif %}{% endif %}">
+                            <p class="link-action-wrapper">
+                            <a href="{{ link.url }}" {% if link.active %}class="active"{% endif %}>{% render 'multilang' with link.title %}</a>
+                            {% if linklists[link.handle] != empty %}
+                            <span class="icon-dropdown">
+                                <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-chevron-right" viewBox="0 0 478.448 478.448"><polygon points="131.659,0 100.494,32.035 313.804,239.232 100.494,446.373 131.65,478.448 377.954,239.232"></polygon></svg>
+                            </span>
+                            </p>
+                            {% assign link_child = link.handle %}
+                            {% render 'dropdown-cat' with link_child as link_child %}
+                            {% endif %}
+                        </li>   
+                        {% endif %}
+                        {% endfor %}
+                      {% else %}
+                        {% assign cat_link_list = section.settings.link_list | handleize %}
+                        {% for link in linklists[cat_link_list].links %}
+                        <li class="sidebar-link-lv1{% if linklists[link.handle] != empty %} dropdown{% if link.active %} open{% endif %}{% endif %}">
+                            <p class="link-action-wrapper">
+                            <a href="{{ link.url }}" {% if link.active %}class="active"{% endif %}>{% render 'multilang' with link.title %}</a>
+                            {% if linklists[link.handle] != empty %}
+                            <span class="icon-dropdown">
+                               <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-chevron-right" viewBox="0 0 478.448 478.448"><polygon points="131.659,0 100.494,32.035 313.804,239.232 100.494,446.373 131.65,478.448 377.954,239.232"></polygon></svg>
+                            </span>
+                            </p>
+                            {% assign link_child = link.handle %}
+                            {% render 'dropdown-cat' with link_child as link_child %}
+                            {% endif %}
+                        </li>        
+                        {% endfor %}       
+                      {% endif %}
+                  </ul>
+              </div>
+          </div>
+          {% endif %}
+        
+          <div class="sidebar-filter" data-has-collapse>
+              {% if current_tags == blank %}{% assign has_refined = false %}{% else %}{% assign has_refined = true %}{% endif %}
+              <div class="refined-widgets"{% if has_refined == false %} style="display:none"{% endif %}>
+                  <div class="widget-title">
+                      <h3 class="sidebar-title">
+                          <span>{{ 'collections.sidebar.refined_by' | t }}</span>
+                          <a href="javascript:void(0)" class="clear-all text-hover" {% if has_refined == false %}style="display:none"{% endif %}>{{ 'collections.sidebar.clear_all' | t }}</a>
+                      </h3>
+                  </div>
+                  <div class="widget-content">
+                      <ul class="refined">    
+                          {% for t in current_tags %}
+                          {% assign tag = t | strip %}{% assign tag_value = tag | handleize %}
+                          <li>
+                              <input type="checkbox" value="{{ tag_value }}" {% if current_tags contains tag %}checked{% endif %}/>
+                              <a href="{{tag_value}}" class="selected-tag">{{tag}}<span>&nbsp;X</span></a>
+                          </li>
+                          {% endfor %}
+                      </ul>
+                  </div>                  
+              </div>
+              
+              {% for block in section.blocks %}  
+                {% if block.type == 'filter_color' and block.settings.enable %}
+                <div class="widget sidebar-tags filter-color">
+                    {% if block.settings.title != blank %}
+                    <div class="widget-title">
+                        <h3 class="sidebar-title">
+                            {% render 'multilang' with block.settings.title %}
+                            <a href="javascript:void(0)" class="clear text-hover" style="display:none">{{ 'collections.sidebar.clear' | t }}</a>
+                        </h3>
+                    </div>
+                    {% endif %}
+                    <div class="widget-content">
+                        <ul class="list-tags">
+                            {% for i in (1..20) %}
+                            {% capture color_text %}color_text_{{ i }}{% endcapture %}{% capture color %}color_img_{{ i }}{% endcapture %}
+                            {% if block.settings[color] != blank %}{% assign img_url = block.settings[color] | img_url: '30x30' %}{% else %}{% assign img_url = '' %}{% endif %}
+                            {% if block.settings[color_text] != blank %}    
+                              {% assign tag = block.settings[color_text] | strip %}
+                              {% if collection.tags contains tag %} 
+                              <li>
+                                  {% assign tag_value = tag | handleize %}
+                                  <input type="checkbox" value="{{ tag_value }}" {% if current_tags contains tag %}checked{% endif %}/>
+                                  <a href="javascript:void(0)" {% if current_tags contains tag %}class="active"{% endif %} title="{{tag}}"><img src="{{ img_url }}" alt=""></a>
+                              </li>
+                              {% endif %}
+                            {% endif %}      
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if block.type == 'filter_text' and block.settings.enable %}
+                <div class="widget sidebar-tags{% if block.settings.title == 'Size | Größe' %} filter-size{% endif %}">
+                    {% assign tags = block.settings.list_tags | split: ',' %}
+                    {% if block.settings.title != blank %}
+                    <div class="widget-title">
+                        <h3 class="sidebar-title">
+                            {% render 'multilang' with block.settings.title %}
+                            <a href="javascript:void(0)" class="clear text-hover" style="display:none">{{ 'collections.sidebar.clear' | t }}</a>
+                        </h3>
+                    </div>
+                    {% endif %}
+                    <div class="widget-content">
+                        <ul class="list-tags">
+                            {% for t in tags %}
+                            {% assign tag = t | strip %}{% assign tag_value = tag | handleize %} 
+                            {% if current_tags contains tag %}
+                            <li>
+                                {% if settings.enable_multilang and tag_value contains '|' %}
+                                  <input type="checkbox" class="lang1" value="{{ tag_value | split: '|' | first }}" checked/>
+                                  <label class="lang1">{{ tag | split: '|' | first }}</label>
+                                  <input type="checkbox" class="lang2" value="{{ tag_value | split: '|' | last }}" checked/>
+                                  <label class="lang2">{{ tag | split: '|' | last }}</label>
+                                {% else %}
+                                  <input type="checkbox" value="{{ tag_value | split: '|' | first }}" checked/>
+                                  <label>{{ tag | split: '|' | first }}</label>
+                                {% endif %}
+                            </li>
+                            {% else %}
+                              {% if collection.tags contains tag %} 
+                              <li>
+                                  {% if settings.enable_multilang and tag_value contains '|' %}
+                                    <input type="checkbox" class="lang1" value="{{ tag_value | split: '|' | first }}"/>
+                                    <label class="lang1">{{ tag | split: '|' | first }}</label>
+                                    <input type="checkbox" class="lang2" value="{{ tag_value | split: '|' | last }}"/>
+                                    <label class="lang2">{{ tag | split: '|' | last }}</label>
+                                  {% else %}
+                                    <input type="checkbox" value="{{ tag_value | split: '|' | first }}"/>
+                                    <label>{{ tag | split: '|' | first }}</label>
+                                  {% endif %}
+                              </li>
+                              {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+              {% endfor %} 
+          </div>
+         
+          {% if section.settings.enable_product %}
+          <div class="widget sidebar-widget-product" data-sidebar-product>
+              {% if section.settings.title_product != blank %}
+              <div class="widget-title"><h3 class="sidebar-title">{% render 'multilang' with section.settings.title_product %}</h3></div>
+              {% endif %}
+              {% if section.settings.collection == blank %}
+              <div class="widget-product">
+                  <div class="grid-item">
+                      <div class="grid-view-item no-product">
+                          <div class="product-top"><div class="not_img">Product Img</div></div>
+                          <div class="product-bottom"><div class="product-title"><span>Your product's name</span></div><div class="price-box"><span> $250.00 </span></div></div>
+                      </div>
+                  </div>
+              </div>
+              {% else %}
+              <div class="widget-product">
+                  <div class="products-grid row">
+                      {% for product in collections[section.settings.collection].products limit:section.settings.limit %}
+                      <div class="grid-item col-12{% if settings.product_image_border %} grid-item-border{% endif %} ">
+                          {% render 'sidebar-product-grid' with product as product %}
+                      </div>
+                      {% endfor %}
+                  </div> 
+              </div>
+              {% endif %}
+          </div>
+          {% endif %}
+
+          {% if section.settings.enable_img_1 %}
+          <div class="widget sidebar-banner">
+              {% if section.settings.image_img_1 != blank %}
+              {%- assign img_url = section.settings.image_img_1 | img_url: 'original', crop: 'center' -%}\
+              <a class="animate-scale" href="{{ section.settings.link_img_1 | default: '#' }}">
+                <img data-src="{{ img_url }}" src="{{ img_url }}" alt="banner" class="lazyautosizes lazyloaded" data-sizes="auto">
+              </a>
+              {% else %}<div class="not_img">210 x 165px</div>{% endif %}
+          </div>
+          {% endif %}
+      </div>
+
+    </div>
+    {% endif %}
+    
+    <div class="col-12 {% if section.settings.display_sidebar %}col-xl-9 col-main{% else %}col-xl-12{% endif %}">
+      {% render 'collection-header' %}
+      {% render 'toolbar' %}
+      
+      <div class="product-collection {{ rows }} row">
+        {% if collection.products_count > 0 %}  
+          {% for product in collection.products %}
+          <div class="grid-item {{ grid_item_width }} {% if settings.product_image_border %}grid-item-border {% endif %}">   
+            {% render 'sidebar-product-grid' with product as product %}
+          </div>
+          {% endfor %}
+        {% else %}
+          <p class="col-12 text-center" style="margin-bottom: 20px;">
+            {{ 'collections.general.no_matches' | t }}
+          </p>
+        {% endif %}
+      </div>
+
+      {% if settings.enable_compare_product %}
+          <div class="compare-link">
+            <a href="javascript:void(0)" data-compare-selected>
+              <span class="compare-text">{{ 'collections.general.compare_selected' | t }}</span>
+              <span class="countPill countPill--positive countPill--alt" data-compare-count></span>
+            </a>
+          </div>
+      {% endif %}
+
+      <div class="product-pagination{% if settings.collection_infinite_scrolling %} infinite-scroll{% endif %}{% if paginate.pages > 1 %} has-pagination{% else %} no-pagination{% endif %}">
+        {% if paginate.pages > 1 %}
+        <div class="padding">
+          {% render 'pagination-page' paginate: paginate %}
+        </div>
+        {% endif %}  
+      </div>
+    </div>
+    
+  </div>
+</div>
+{% endpaginate %}   
+
+{% schema %}
+{
+  "name": "Main Collection",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Sidebar Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_sidebar",
+      "label": "Enable Sidebar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_categories",
+      "label": "Enable Categories List",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title_categories",
+      "label": "Categories Title",
+      "default": "Categories"
+    },
+    {
+      "type": "select",
+      "id": "style_categories",
+      "label": "Categories Style",
+      "default": "style_show_all",
+      "options": [
+        { "value": "style_show_all", "label": "Show all" },
+        { "value": "style_main_menu", "label": "Get From Main Menu" },
+        { "value": "style_little", "label": "Only a few" }
+      ]
+    },
+    {
+      "type": "link_list",
+      "id": "link_list",
+      "label": "Choose a menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Product Slider (Sidebar)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_product",
+      "label": "Enable Product Slider",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title_product",
+      "label": "Slider Title"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection"
+    },
+    {
+      "type": "text",
+      "id": "limit",
+      "label": "Limit Products",
+      "default": "8"
+    },
+    {
+      "type": "header",
+      "content": "Collection Grid Content"
+    },
+    {
+      "type": "select",
+      "id": "collection_results_per_row",
+      "label": "Products per row",
+      "default": "4",
+      "options": [
+        { "value": "1", "label": "List" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" },
+        { "value": "5", "label": "5" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "collection_results_per_page",
+      "label": "Products per page",
+      "default": "24",
+      "options": [
+        { "value": "12", "label": "12" },
+        { "value": "16", "label": "16" },
+        { "value": "20", "label": "20" },
+        { "value": "24", "label": "24" },
+        { "value": "30", "label": "30" },
+        { "value": "50", "label": "50" }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter_color",
+      "name": "Filter Color",
+      "settings": [
+        { "type": "checkbox", "id": "enable", "label": "Enable", "default": true },
+        { "type": "text", "id": "title", "label": "Filter Title" },
+        { "type": "text", "id": "color_text_1", "label": "Color text 1" },
+        { "type": "image_picker", "id": "color_img_1", "label": "Color image 1" },
+        { "type": "text", "id": "color_text_2", "label": "Color text 2" },
+        { "type": "image_picker", "id": "color_img_2", "label": "Color image 2" },
+        { "type": "text", "id": "color_text_3", "label": "Color text 3" },
+        { "type": "image_picker", "id": "color_img_3", "label": "Color image 3" }
+      ]
+    },
+    {
+      "type": "filter_text",
+      "name": "Filter Text",
+      "settings": [
+        { "type": "checkbox", "id": "enable", "label": "Enable", "default": true },
+        { "type": "text", "id": "title", "label": "Filter Title" },
+        { "type": "textarea", "id": "list_tags", "label": "List Tags (Comma Separated)" }
+      ]
+    }
+  ]
+}
+{% endschema %}

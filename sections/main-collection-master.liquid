@@ -1,18 +1,21 @@
-<div class="container">
+<div class="container-fluid container-collection-master" style="margin-top: 30px;">
   <div class="row">
-    <div class="col-12 col-xl-3 col-sidebar">
-      {% section 'sidebar-section' %}
+    
+    <div class="col-12 col-xl-3 col-sidebar-left">
+      {% include 'collection-sidebar' %}
     </div>
     
-    <div class="col-12 col-xl-9 col-main">
+    <div class="col-12 col-xl-9 col-main-right">
       {% include 'collection-template-default' %}
     </div>
+    
   </div>
 </div>
 
 {% schema %}
 {
   "name": "Collection Master",
+  "class": "shopify-section-collection-master",
   "settings": []
 }
 {% endschema %}
