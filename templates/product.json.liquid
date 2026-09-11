@@ -85,7 +85,7 @@
       {% endif %}
       
       <a class="product-title" href="{{ product.url | within: collection }}">
-        {% render 'multilang' with product.title | truncatewords: 2 %}
+        {% render 'multilang' with product.title, truncatewords: 2 %}
       </a>
 
       {% if settings.display_item_swatch %}
@@ -130,4 +130,13 @@
       
     </div>
   </div>
-</div>
+</div>{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'multilang' with product.title | truncatewords: 2 %}"
+  to: "{% render 'multilang' with product.title, truncatewords: 2 %}"
+  position: 3230..3291
+{%- endcomment -%}
